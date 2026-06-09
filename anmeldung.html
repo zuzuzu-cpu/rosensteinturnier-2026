@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anmeldung – Offenes Heubacher Rosensteinturnier 2026</title>
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --navy:   #12234e;
+      --red:    #c0271d;
+      --gold:   #d4960a;
+      --bg:     #f4f5f8;
+      --card:   #ffffff;
+      --muted:  #6b7280;
+      --border: #dde1ea;
+      --info-bg:#eef4ff;
+      --info-border:#4f7df0;
+      --warn-bg:#fff8e6;
+      --warn-border:#d4960a;
+      --success-bg:#e6f9f0;
+      --success-border:#22a96d;
+      --radius: 12px;
+      --shadow: 0 4px 24px rgba(18,35,78,.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: #1e2535;
+      min-height: 100vh;
+    }
+
+    /* ── Header ── */
+    .site-header {
+      background: var(--navy);
+      padding: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .site-header::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        135deg,
+        transparent,
+        transparent 18px,
+        rgba(255,255,255,.03) 18px,
+        rgba(255,255,255,.03) 36px
+      );
+    }
+    .belt-stripe {
+      height: 7px;
+      background: linear-gradient(90deg, var(--red) 0%, var(--gold) 100%);
+    }
+    .header-inner {
+      position: relative;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 36px 24px 32px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .header-icon {
+      flex-shrink: 0;
+      width: 54px;
+      height: 54px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+    }
+    .header-text h1 {
+      color: #fff;
+      font-size: clamp(1.15rem, 4vw, 1.55rem);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1.2;
+    }
+    .header-text .subtitle {
+      color: rgba(255,255,255,.6);
+      font-size: .85rem;
+      margin-top: 6px;
+    }
+    .event-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    .pill {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.85);
+      font-size: .75rem;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .pill.red { background: rgba(192,39,29,.35); border-color: var(--red); }
+
+    /* ── Layout ── */
+    .page-body {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 16px 60px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 28px 28px;
+      margin-bottom: 20px;
+    }
+    .card-title {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-title::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* ── Form elements ── */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .form-row.single { grid-template-columns: 1fr; }
+
+    .field { display: flex; flex-direction: column; gap: 6px; }
+    label {
+      font-size: .82rem;
+      font-weight: 600;
+      color: #374151;
+    }
+    label .req { color: var(--red); margin-left: 2px; }
+
+    input[type="text"],
+    input[type="email"],
+    select {
+      height: 44px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0 14px;
+      font-size: .92rem;
+      color: #1e2535;
+      background: #fff;
+      transition: border-color .15s, box-shadow .15s;
+      width: 100%;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.8' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 38px;
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--navy);
+      box-shadow: 0 0 0 3px rgba(18,35,78,.10);
+    }
+    input:disabled, select:disabled {
+      background: #f8f9fb;
+      color: #b0b8c8;
+      cursor: not-allowed;
+    }
+
+    /* ── Radio group ── */
+    .radio-group {
+      display: flex;
+      gap: 10px;
+    }
+    .radio-option {
+      flex: 1;
+      position: relative;
+    }
+    .radio-option input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+    }
+    .radio-option label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      height: 44px;
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: .9rem;
+      font-weight: 500;
+      color: #374151;
+      transition: all .15s;
+      user-select: none;
+      background: #fff;
+    }
+    .radio-option input[type="radio"]:checked + label {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(18,35,78,.2);
+    }
+
+    /* ── Info boxes ── */
+    .info-box {
+      border-radius: 8px;
+      padding: 14px 16px;
+      font-size: .85rem;
+      line-height: 1.55;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .info-box.blue {
+      background: var(--info-bg);
+      border: 1px solid var(--info-border);
+      color: #1e3a8a;
+    }
+    .info-box.gold {
+      background: var(--warn-bg);
+      border: 1px solid var(--warn-border);
+      color: #7c4f00;
+    }
+    .info-box.green {
+      background: var(--success-bg);
+      border: 1px solid var(--success-border);
+      color: #0f5132;
+    }
+    .info-box .icon { font-size: 1.1rem; flex-shrink: 0; margin-top: 1px; }
+    .info-box .body strong { display: block; margin-bottom: 3px; }
+
+    .hint { font-size: .78rem; color: var(--muted); margin-top: 3px; }
+
+    /* ── Weight group label ── */
+    .weight-label {
+      font-size: .78rem;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    /* ── Divider ── */
+    .divider { height: 1px; background: var(--border); margin: 20px 0; }
+
+    /* ── Submit button ── */
+    .btn-submit {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, var(--navy) 0%, #1a3a7e 100%);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      cursor: pointer;
+      transition: transform .12s, box-shadow .12s;
+      box-shadow: 0 4px 16px rgba(18,35,78,.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(18,35,78,.30);
+    }
+    .btn-submit:active { transform: translateY(0); }
+
+    /* ── Success state ── */
+    #success-message {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    #success-message .big-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    #success-message h2 { font-size: 1.4rem; color: var(--navy); margin-bottom: 8px; }
+    #success-message p { color: var(--muted); font-size: .9rem; }
+
+    /* ── Footer note ── */
+    .form-note {
+      font-size: .75rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 560px) {
+      .form-row { grid-template-columns: 1fr; gap: 12px; }
+      .card { padding: 20px 16px; }
+      .header-inner { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="belt-stripe"></div>
+  <div class="header-inner">
+    <div class="header-icon">🥋</div>
+    <div class="header-text">
+      <h1>Offenes Heubacher Rosensteinturnier 2026</h1>
+      <p class="subtitle">Württembergischer Judo-Verband e.V. · Judozentrum Heubach e.V.</p>
+      <div class="event-pills">
+        <span class="pill">📅 Sa. 20. Juni 2026 — U13 / U15 / U18</span>
+        <span class="pill">📅 So. 21. Juni 2026 — U9 / U11</span>
+        <span class="pill red">⚠️ Meldeschluss: 15. Juni 2026</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<div class="page-body">
+
+  <!-- INFO CARD -->
+  <div class="card">
+    <div class="card-title">Veranstaltungsort</div>
+    <div class="info-box blue">
+      <span class="icon">📍</span>
+      <div class="body">
+        <strong>Sporthalle der Realschule Heubach</strong>
+        Adlerstraße 78, 73540 Heubach · Anreise: <a href="https://www.jz-heubach.de" target="_blank" style="color:inherit">www.jz-heubach.de</a> → Kontakt
+      </div>
+    </div>
+  </div>
+
+  <!-- ANMELDEFORMULAR -->
+  <form id="reg-form" action="https://formspree.io/f/xpqerrar" method="POST" novalidate>
+
+    <!-- Persönliche Daten -->
+    <div class="card">
+      <div class="card-title">Persönliche Daten</div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="vorname">Vorname<span class="req">*</span></label>
+          <input type="text" id="vorname" name="vorname" placeholder="Max" required />
+        </div>
+        <div class="field">
+          <label for="nachname">Nachname<span class="req">*</span></label>
+          <input type="text" id="nachname" name="nachname" placeholder="Mustermann" required />
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Wettkampfdaten -->
+    <div class="card">
+      <div class="card-title">Wettkampfkategorie</div>
+
+      <!-- Geschlecht -->
+      <div class="field" style="margin-bottom:16px">
+        <label>Geschlecht<span class="req">*</span></label>
+        <div class="radio-group" id="geschlecht-group">
+          <div class="radio-option">
+            <input type="radio" name="geschlecht" id="maennlich" value="m" />
+            <label for="maennlich">♂ Männlich</label>
+          </div>
+          <div class="radio-option">
+            <input type="radio" name="geschlecht" id="weiblich" value="w" />
+            <label for="weiblich">♀ Weiblich</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Altersklasse + Jahrgang -->
+      <div class="form-row">
+        <div class="field">
+          <label for="altersklasse">Altersklasse<span class="req">*</span></label>
+          <select id="altersklasse" name="altersklasse" required>
+            <option value="">— Bitte wählen —</option>
+            <option value="u9">U9 (Jg. 2018–2019)</option>
+            <option value="u11">U11 (Jg. 2016–2017)</option>
+            <option value="u13">U13 (Jg. 2014–2016)</option>
+            <option value="u15">U15 (Jg. 2012–2014)</option>
+            <option value="u18">U18 (Jg. 2009–2011)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="jahrgang">Jahrgang<span class="req">*</span></label>
+          <select id="jahrgang" name="jahrgang" required disabled>
+            <option value="">— erst Altersklasse wählen —</option>
+          </select>
+          <span class="hint" id="jahrgang-hint"></span>
+        </div>
+      </div>
+
+      <!-- Gewichtsklasse -->
+      <div class="form-row single">
+        <div class="field">
+          <label for="gewicht">Gewichtsklasse / Gruppe<span class="req">*</span></label>
+          <select id="gewicht" name="gewichtsklasse" required disabled>
+            <option value="">— erst Geschlecht &amp; Altersklasse wählen —</option>
+          </select>
+          <span class="hint" id="gewicht-hint"></span>
+        </div>
+      </div>
+
+      <!-- Waagezeit Box (dynamisch) -->
+      <div id="waagezeit-box" style="display:none; margin-top:4px;"></div>
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn-submit" id="submit-btn">
+      <span>🥋</span> Jetzt anmelden
+    </button>
+
+  </form>
+
+  <!-- SUCCESS -->
+  <div id="success-message" class="card">
+    <div class="big-icon">🏆</div>
+    <h2>Anmeldung erfolgreich!</h2>
+    <p>Vielen Dank. Deine Anmeldung wurde übermittelt.<br>Wir wünschen viel Erfolg beim Turnier!</p>
+  </div>
+
+</div><!-- /page-body -->
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────────────
+const DATA = {
+  m: {
+    u9: {
+      jahrgaenge: [2018, 2019],
+      gewichte: [{ val: "gruppe3", label: "Einteilung in gewichtsnahe Gruppen (Gruppe 3)" }],
+      waagezeit: (g) => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit</strong>Gruppe 3 (männlich U9 ab gelb + U11 nur gelb): <strong>11:20 – 11:40 Uhr</strong></div></div>`
+    },
+    u11: {
+      jahrgaenge: [2016, 2017],
+      gewichte: [
+        { val: "bis31",   label: "Bis 31 kg (ab gelb-orange) — Gruppe 4" },
+        { val: "ueber31", label: "Über 31 kg (ab gelb-orange) — Gruppe 5" },
+        { val: "nurgелб",  label: "Nur gelber Gürtel (unabhängig vom Gewicht) — Gruppe 3" },
+      ],
+      waagezeit: (g) => {
+        if (g === "bis31")   return `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit</strong>Gruppe 4 (männlich U11, ab gelb-orange, unter/bis 31 kg): <strong>13:00 – 13:20 Uhr</strong></div></div>`;
+        if (g === "ueber31") return `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit</strong>Gruppe 5 (männlich U11, ab gelb-orange, über 31 kg): <strong>14:45 – 15:10 Uhr</strong></div></div>`;
+        if (g === "nurgелб") return `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit</strong>Gruppe 3 (männlich U9 ab gelb + U11 nur gelb): <strong>11:20 – 11:40 Uhr</strong></div></div>`;
+        return "";
+      }
+    },
+    u13: {
+      jahrgaenge: [2014, 2015, 2016],
+      gewichte: ["-28 kg","-31 kg","-34 kg","-37 kg","-40 kg","-43 kg","-46 kg","-50 kg","-55 kg","+55 kg"].map(v=>({val:v,label:v})),
+      waagezeit: (g) => {
+        const light = ["-28 kg","-31 kg","-34 kg","-37 kg","-40 kg"];
+        const heavy = ["-43 kg","-46 kg","-50 kg","-55 kg","+55 kg"];
+        let html = `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeiten Mu13</strong>`;
+        if (!g || light.includes(g)) html += `Gruppe I (−28 bis −40 kg): <strong>09:00 – 09:30 Uhr</strong><br>`;
+        if (!g || heavy.includes(g)) html += `Gruppe II (−43 bis +55 kg): <strong>10:30 – 10:50 Uhr</strong>`;
+        return html + `</div></div>`;
+      }
+    },
+    u15: {
+      jahrgaenge: [2012, 2013, 2014],
+      gewichte: ["-34 kg","-37 kg","-40 kg","-43 kg","-46 kg","-50 kg","-55 kg","-60 kg","-66 kg","+66 kg"].map(v=>({val:v,label:v})),
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit Mu15</strong><strong>12:30 – 13:00 Uhr</strong></div></div>`
+    },
+    u18: {
+      jahrgaenge: [2009, 2010, 2011],
+      gewichte: ["-46 kg","-50 kg","-55 kg","-60 kg","-66 kg","-73 kg","-81 kg","-90 kg","+90 kg"].map(v=>({val:v,label:v})),
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit Mu18</strong><strong>15:30 – 16:00 Uhr</strong></div></div>`
+    }
+  },
+  w: {
+    u9: {
+      jahrgaenge: [2018, 2019],
+      gewichte: [{ val: "gruppe1", label: "Einteilung in gewichtsnahe Gruppen (Gruppe 1)" }],
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit</strong>Gruppe 1 (weiblich U9, ab gelb): <strong>09:00 – 09:20 Uhr</strong></div></div>`
+    },
+    u11: {
+      jahrgaenge: [2016, 2017],
+      gewichte: [{ val: "gruppe2", label: "Einteilung in gewichtsnahe Gruppen (Gruppe 2)" }],
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit</strong>Gruppe 2 (weiblich U11, ab gelb): <strong>10:00 – 10:20 Uhr</strong></div></div>`
+    },
+    u13: {
+      jahrgaenge: [2014, 2015, 2016],
+      gewichte: ["-27 kg","-30 kg","-33 kg","-36 kg","-40 kg","-44 kg","-48 kg","-52 kg","-57 kg","+57 kg"].map(v=>({val:v,label:v})),
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit Fu13</strong><strong>10:30 – 10:50 Uhr</strong></div></div>`
+    },
+    u15: {
+      jahrgaenge: [2012, 2013, 2014],
+      gewichte: ["-33 kg","-36 kg","-40 kg","-44 kg","-48 kg","-52 kg","-57 kg","-63 kg","+63 kg"].map(v=>({val:v,label:v})),
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit Fu15</strong><strong>14:00 – 14:30 Uhr</strong></div></div>`
+    },
+    u18: {
+      jahrgaenge: [2009, 2010, 2011],
+      gewichte: ["-40 kg","-44 kg","-48 kg","-52 kg","-57 kg","-63 kg","-70 kg","-78 kg","+78 kg"].map(v=>({val:v,label:v})),
+      waagezeit: () => `<div class="info-box gold"><span class="icon">⏰</span><div class="body"><strong>Waagezeit Fu18</strong><strong>14:00 – 14:30 Uhr</strong></div></div>`
+    }
+  }
+};
+
+// ── Elements ──────────────────────────────────────────────────────────────────
+const geschlechtRadios = document.querySelectorAll('input[name="geschlecht"]');
+const selAlter   = document.getElementById('altersklasse');
+const selJahrg   = document.getElementById('jahrgang');
+const selGewicht = document.getElementById('gewicht');
+const waageBox   = document.getElementById('waagezeit-box');
+const gewichtHint= document.getElementById('gewicht-hint');
+
+function getGeschlecht() {
+  const checked = document.querySelector('input[name="geschlecht"]:checked');
+  return checked ? checked.value : null;
+}
+
+function updateForm() {
+  const g = getGeschlecht();
+  const ak = selAlter.value;
+
+  // Reset Jahrgang
+  selJahrg.innerHTML = '<option value="">— bitte wählen —</option>';
+  selJahrg.disabled = true;
+
+  // Reset Gewicht
+  selGewicht.innerHTML = '<option value="">— bitte wählen —</option>';
+  selGewicht.disabled = true;
+  gewichtHint.textContent = "";
+
+  waageBox.style.display = "none";
+  waageBox.innerHTML = "";
+
+  if (!g || !ak) return;
+
+  const cfg = DATA[g][ak];
+  if (!cfg) return;
+
+  // Jahrgang
+  selJahrg.disabled = false;
+  cfg.jahrgaenge.forEach(j => {
+    const o = document.createElement('option');
+    o.value = j; o.textContent = j;
+    selJahrg.appendChild(o);
+  });
+
+  // Gewicht
+  selGewicht.disabled = false;
+  cfg.gewichte.forEach(w => {
+    const o = document.createElement('option');
+    o.value = w.val; o.textContent = w.label;
+    selGewicht.appendChild(o);
+  });
+
+  // Waagezeit initial anzeigen (ohne Gewichtsauswahl)
+  waageBox.innerHTML = cfg.waagezeit("");
+  waageBox.style.display = "block";
+}
+
+function updateWaagezeit() {
+  const g = getGeschlecht();
+  const ak = selAlter.value;
+  const gew = selGewicht.value;
+  if (!g || !ak) return;
+  const cfg = DATA[g][ak];
+  if (!cfg) return;
+  waageBox.innerHTML = cfg.waagezeit(gew);
+  waageBox.style.display = "block";
+}
+
+geschlechtRadios.forEach(r => r.addEventListener('change', updateForm));
+selAlter.addEventListener('change', updateForm);
+selGewicht.addEventListener('change', updateWaagezeit);
+
+// ── Form submission ────────────────────────────────────────────────────────────
+const form = document.getElementById('reg-form');
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  // Basic validation
+  const required = form.querySelectorAll('[required]');
+  let valid = true;
+  required.forEach(el => {
+    if (el.type === 'checkbox' && !el.checked) valid = false;
+    else if (el.type !== 'checkbox' && !el.value.trim()) valid = false;
+    if (!valid) el.focus();
+  });
+  if (!getGeschlecht()) { valid = false; alert("Bitte Geschlecht auswählen."); }
+  if (!valid) { alert("Bitte alle Pflichtfelder ausfüllen."); return; }
+
+  const btn = document.getElementById('submit-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span>⏳</span> Wird gesendet…';
+
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('success-message').style.display = 'block';
+    } else {
+      throw new Error();
+    }
+  } catch {
+    alert("Fehler beim Senden. Bitte per E-Mail an meldung@jz-heubach.de melden.");
+    btn.disabled = false;
+    btn.innerHTML = '<span>🥋</span> Jetzt anmelden';
+  }
+});
+</script>
+
+</body>
+</html>
